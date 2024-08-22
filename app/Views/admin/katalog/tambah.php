@@ -37,8 +37,8 @@ Tambah Katalog
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="status">Status</label>
-                                <select class="form-select form-control" name="status" id="status">
-                                    <option value="" selected disabled>Pilih status</option>
+                                <select class="form-select form-control" name="status" id="status" value="">
+                                    <option value="" selected disabled hidden>Pilih status</option>
                                     <option value="p">Publish</option>
                                     <option value="d">Draft</option>
                                 </select>
@@ -49,7 +49,7 @@ Tambah Katalog
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="gambar" class="d-block">Gambar</label>
-                                <input type="file" class="form-control-file" id="gambar" name="gambar" />
+                                <input type="file" class="form-control-file" id="gambar" name="gambar" value="<?= old('gambar'); ?>" />
                             </div>
                         </div>
                     </div>

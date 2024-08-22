@@ -19,7 +19,10 @@ class AuthController extends BaseController
     {
         $user = $this->request->getVar();
 
-        if (!$user) {
+        if (empty($user['username']) || empty($user['password'])) {
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Gagal Login!');
+            session()->setFlashdata('pesan2', 'Username dan Password tidak boleh kosong');
             return redirect()->to('/');
         }
 
@@ -31,10 +34,16 @@ class AuthController extends BaseController
                 session()->set($params);
                 return redirect()->route('beranda');
             } else {
-                return redirect()->to('/');
+                session()->setFlashdata('jenis', 'error');
+                session()->setFlashdata('pesan1', 'Gagal Login!');
+                session()->setFlashdata('pesan2', 'Password salah');
+                return redirect()->back();
             }
         } else {
-            return redirect()->to('/');
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Gagal Login!');
+            session()->setFlashdata('pesan2', 'Username salah');
+            return redirect()->back();
         }
     }
 

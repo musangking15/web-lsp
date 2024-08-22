@@ -6,41 +6,34 @@ use CodeIgniter\Model;
 
 class Transaksi extends Model
 {
-    protected $table            = 'transaksis';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $table            = 'transaksi';
+    protected $primaryKey       = 'transaksi_id';
+    protected $allowedFields    = ['nama', 'email', 'tanggal', 'nomor_hp', 'alamat', 'kat_id', 'status_pesanan'];
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    public function getTransaksiWithKatalog()
+    {
+        return $this->select('transaksi.*, katalog.nama_katalog, katalog.harga')
+            ->join('katalog', 'transaksi.kat_id = katalog.katalog_id')
+            ->orderBy('status_pesanan', 'ASC')
+            ->findAll();
+    }
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    public function getTransaksiWithKeyword($keyword = null)
+    {
+        if ($keyword !== null && $keyword !== '') {
+            return $this->select('transaksi.*, katalog.nama_katalog, katalog.harga')
+                ->join('katalog', 'transaksi.kat_id = katalog.katalog_id')
+                ->like('email', $keyword)
+                ->findAll();
+        } else {
+            return [];
+        }
+    }
 }

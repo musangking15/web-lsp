@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>Jewepe</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="<?= base_url('assets_admin'); ?>/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
@@ -66,22 +66,28 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item">
+                        <li class="nav-item <?= (current_url(true)->getPath() == '/admin') ? 'active' : '' ?>">
                             <a href="<?= url_to('beranda'); ?>">
                                 <i class="fas fa-home"></i>
                                 <p>Beranda</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item <?= (current_url(true)->getPath() == '/admin/katalog') ? 'active' : '' ?>">
                             <a href="<?= url_to('tampil_katalog'); ?>">
                                 <i class="fas fa-th-list"></i>
                                 <p>Katalog</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#charts">
+                        <li class="nav-item <?= (current_url(true)->getPath() == '/admin/transaksi') ? 'active' : '' ?>">
+                            <a href="<?= url_to('tampil_transaksi'); ?>">
                                 <i class="far fa-chart-bar"></i>
                                 <p>Transaksi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item <?= (current_url(true)->getPath() == '/admin/laporan') ? 'active' : '' ?>">
+                            <a href="<?= url_to('tampil_laporan'); ?>">
+                                <i class="far fa-sticky-note"></i>
+                                <p>Laporan</p>
                             </a>
                         </li>
                     </ul>
@@ -131,7 +137,7 @@
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
-                                            <a class="dropdown-item" href="<?= url_to('setting'); ?>">Account Setting</a>
+                                            <a class="dropdown-item" href="<?= url_to('setting'); ?>">Setting</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="<?= url_to('logout'); ?>">Logout</a>
                                         </li>
@@ -198,46 +204,56 @@
     <script src="<?= base_url('assets_admin'); ?>/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Sweet Alert -->
-    <script src="<?= base_url('assets_admin'); ?>/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
     <script src="<?= base_url('assets_admin'); ?>/js/kaiadmin.min.js"></script>
 
-    <script>
-        $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-            type: "line",
-            height: "70",
-            width: "100%",
-            lineWidth: "2",
-            lineColor: "#177dff",
-            fillColor: "rgba(23, 125, 255, 0.14)",
-        });
-
-        $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-            type: "line",
-            height: "70",
-            width: "100%",
-            lineWidth: "2",
-            lineColor: "#f3545d",
-            fillColor: "rgba(243, 84, 93, .14)",
-        });
-
-        $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-            type: "line",
-            height: "70",
-            width: "100%",
-            lineWidth: "2",
-            lineColor: "#ffa534",
-            fillColor: "rgba(255, 165, 52, .14)",
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
-        $('#editor').summernote({
-            height: 200
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php if (session()->getFlashdata('pesan1')) : ?>
+                swal({
+                    icon: '<?= session()->getFlashdata('jenis'); ?>',
+                    title: '<?= session()->getFlashdata('pesan1'); ?>',
+                    text: '<?= session()->getFlashdata('pesan2'); ?>'
+                });
+            <?php endif; ?>
+
+
+            $('#editor').summernote({
+                height: 200
+            });
+
+            $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+                type: "line",
+                height: "70",
+                width: "100%",
+                lineWidth: "2",
+                lineColor: "#177dff",
+                fillColor: "rgba(23, 125, 255, 0.14)",
+            });
+
+            $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+                type: "line",
+                height: "70",
+                width: "100%",
+                lineWidth: "2",
+                lineColor: "#f3545d",
+                fillColor: "rgba(243, 84, 93, .14)",
+            });
+
+            $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+                type: "line",
+                height: "70",
+                width: "100%",
+                lineWidth: "2",
+                lineColor: "#ffa534",
+                fillColor: "rgba(255, 165, 52, .14)",
+            });
+        })
     </script>
 </body>
 

@@ -19,6 +19,10 @@ class CreateTransaksi extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '50',
             ],
+            'email' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
+            ],
             'tanggal' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '50',
@@ -32,6 +36,10 @@ class CreateTransaksi extends Migration
                 'null' => true,
             ],
             'kat_id' => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+            ],
+            'status_pesanan' => [
                 'type'           => 'INT',
                 'constraint'     => 5,
             ],

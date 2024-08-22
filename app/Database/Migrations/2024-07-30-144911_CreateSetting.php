@@ -15,10 +15,6 @@ class CreateSetting extends Migration
                 'constraint'     => 5,
                 'auto_increment' => true,
             ],
-            'title' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '50',
-            ],
             'alamat' => [
                 'type' => 'TEXT',
                 'null' => true,

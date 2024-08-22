@@ -10,7 +10,6 @@ Katalog
     <a href="<?= url_to('tambah_katalog'); ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
 </div>
 <div class="card-body">
-    <div class="card-sub"></div>
     <table class="table table-striped mt-3">
         <thead>
             <tr>

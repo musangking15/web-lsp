@@ -40,10 +40,13 @@ class KatalogController extends BaseController
                 'deskripsi' => 'required',
                 'harga' => 'required|numeric',
                 'status' => 'required',
-                'gambar' => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'gambar' => 'required|uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
             ];
 
             if (!$validationRules) {
+                session()->setFlashdata('jenis', 'error');
+                session()->setFlashdata('pesan1', 'Failed!');
+                session()->setFlashdata('pesan2', 'Inputan data anda tidak valid');
                 return redirect()->route('tambah_katalog');
             }
 
@@ -70,8 +73,14 @@ class KatalogController extends BaseController
             $add = $this->katalog->insert($data);
 
             if ($add) {
+                session()->setFlashdata('jenis', 'success');
+                session()->setFlashdata('pesan1', 'Success!');
+                session()->setFlashdata('pesan2', 'Data berhasil ditambah');
                 return redirect()->route('tampil_katalog');
             } else {
+                session()->setFlashdata('jenis', 'error');
+                session()->setFlashdata('pesan1', 'Failed!');
+                session()->setFlashdata('pesan2', 'Data gagal ditambah');
                 return redirect()->route('tampil_katalog');
             }
         } else {
@@ -93,6 +102,9 @@ class KatalogController extends BaseController
         $katalog = $this->katalog->find($id);
 
         if (!$katalog) {
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Failed!');
+            session()->setFlashdata('pesan2', 'Id tidak ditemukan');
             return redirect()->route('tampil_katalog');
         }
 
@@ -124,8 +136,14 @@ class KatalogController extends BaseController
         $update = $this->katalog->update($id, $data);
 
         if ($update) {
+            session()->setFlashdata('jenis', 'success');
+            session()->setFlashdata('pesan1', 'Success!');
+            session()->setFlashdata('pesan2', 'Data berhasil diedit');
             return redirect()->route('tampil_katalog');
         } else {
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Failed!');
+            session()->setFlashdata('pesan2', 'Data gagal diedit');
             return redirect()->route('tampil_katalog');
         }
     }
@@ -135,6 +153,9 @@ class KatalogController extends BaseController
         $katalog = $this->katalog->find($id);
 
         if (!$katalog) {
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Failed!');
+            session()->setFlashdata('jenis', 'Id tidak ditemukan');
             return redirect()->route('tampil_katalog');
         }
 
@@ -143,8 +164,14 @@ class KatalogController extends BaseController
         $delete = $this->katalog->delete($id);
 
         if ($delete) {
+            session()->setFlashdata('jenis', 'success');
+            session()->setFlashdata('pesan1', 'Success!');
+            session()->setFlashdata('pesan2', 'Data berhasil dihapus');
             return redirect()->route('tampil_katalog');
         } else {
+            session()->setFlashdata('jenis', 'error');
+            session()->setFlashdata('pesan1', 'Failed!');
+            session()->setFlashdata('pesan2', 'Data gagal dihapus');
             return redirect()->route('tampil_katalog');
         }
     }

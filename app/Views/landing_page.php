@@ -60,7 +60,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#paket">Paket</a>
                         </li>
-                        <a class="nav-link" href="#testimonial">Testimonial</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonial">Testimonial</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/cek-pesanan'); ?>">Cek Pesanan</a>
                         </li>
                     </ul>
                     <div class="my-2 my-lg-0">
@@ -169,28 +173,27 @@
         </div>
         <div class="projects_section_2 layout_padding">
             <div class="container">
-                <div class="owl-carousel owl-theme">
-                    <?php foreach ($katalog as $item) : ?>
-                        <div class="item">
-                            <div class="col-md-12">
-                                <div class="shadow">
-                                    <div class="container_main" style="width: 100%;">
-                                        <img src="<?= base_url('gambar/') . $item['gambar']; ?>" class="image">
-                                        <div class="overlay">
-                                            <div class="text text-center">
-                                                <a class="some_text" href="<?= base_url('katalog') ?>/<?= $item['katalog_id']; ?>"><i class="fa fa-link" aria-hidden="true"></i></a>
-                                            </div>
+                <?php if (!empty($katalog)) : ?>
+                    <div class="owl-carousel owl-theme">
+                        <?php foreach ($katalog as $item) : ?>
+                            <div class="item">
+                                <div class="col-md-12">
+                                    <div class="shadow">
+                                        <div class="container_main" style="width: 100%;">
+                                            <img src="<?= base_url('gambar/') . $item['gambar']; ?>" class="image">
                                         </div>
-                                    </div>
-                                    <div class="project_main text-center" style="width: 100%;">
-                                        <h2 class="work_text "><?= $item['nama_katalog']; ?></h2>
-                                        <p class="dummy_text ">RP <?= number_format($item['harga'], 0, '.', ','); ?></p>
+                                        <div class="project_main text-center" style="width: 100%;">
+                                            <h2 class="work_text "><?= $item['nama_katalog']; ?></h2>
+                                            <p class="dummy_text ">RP <?= number_format($item['harga'], 0, '.', ','); ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else : ?>
+                    <h1 class="text-center font-weight-bold">Paket pernikahan Kosong</h1>
+                <?php endif ?>
             </div>
         </div>
     </div>
@@ -269,31 +272,27 @@
             <div class="contact_section_2">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-8">
-                        <form action="<?= base_url('pesan') ?>" method="post">
+                        <form action="<?= url_to('pesan') ?>" method="post">
                             <?= csrf_field(); ?>
                             <div class="mail_section_1">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="nama_pemesan">Nama</label>
-                                        <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan">
+                                        <label for="nama">Nama</label>
+                                        <input type="text" class="form-control" id="nama" name="nama" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email">
+                                        <input type="text" class="form-control" id="email" name="email" required>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="no_hp">Nomor Hp</label>
-                                    <input type="text" class="form-control" id="no_hp" name="no_hp">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alamat">Alamat</label>
-                                    <textarea class="form-control" id="alamat" rows="3" name="alamat"></textarea>
-                                </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-4">
+                                        <label for="nomor_hp">Nomor Hp</label>
+                                        <input type="text" class="form-control" id="nomor_hp" name="nomor_hp" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
                                         <label for="paket">Paket</label>
-                                        <select id="paket" name="id_katalog" class="form-control">
+                                        <select id="paket" name="kat_id" class="form-control" required>
                                             <option value="" disabled selected>Pilih Paket</option>
                                             <?php foreach ($katalog as $item) : ?>
                                                 <option value="<?= $item['katalog_id']; ?>"><?= $item['nama_katalog']; ?></option>
@@ -301,13 +300,13 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="tanggal_pemesanan">Tanggal Pernikahan</label>
-                                        <input type="date" class="form-control" id="tanggal_pemesanan" name="tanggal_pemesanan">
+                                        <label for="tanggal">Tanggal</label>
+                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="jam_pemesanan">Jam Pernikahan</label>
-                                        <input type="time" class="form-control" id="jam_pemesanan" name="jam_pemesanan">
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="alamat">Alamat</label>
+                                    <textarea class="form-control" id="alamat" rows="3" name="alamat" required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Pesan</button>
                             </div>
@@ -460,11 +459,11 @@
                     <?= csrf_field(); ?>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="masukkan username..." required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="masukkan username...">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="masukkan password..." required>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="masukkan password...">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-sm px-3">Login</button>
@@ -474,22 +473,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Paket -->
-<?php foreach ($katalog as $item) : ?>
-    <div class="modal fade" id="exampleModal-<?= $item['katalog_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title font-weight-bold" id="exampleModalLabel"><?= $item['nama_katalog']; ?></h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <?= $item['deskripsi']; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach; ?>
